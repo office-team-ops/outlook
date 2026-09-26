@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verification</title>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+  }
+
+  body {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #e8f0fe 0%, #f3e8fd 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+  }
+
+  body::before,
+  body::after {
+    content: '';
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: #333;
+    border-radius: 50%;
+    opacity: 0.6;
+  }
+  body::before { top: 30%; left: 28%; }
+  body::after { top: 20%; left: 55%; width: 3px; height: 3px; }
+
+  .card {
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 32px 40px 36px;
+    width: 380px;
+    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.08);
+    animation: fadeIn 0.5s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 24px;
+    font-size: 15px;
+    color: #5e5e5e;
+  }
+
+  .back-arrow {
+    font-size: 16px;
+    color: #5e5e5e;
+    cursor: pointer;
+    user-select: none;
+    padding: 2px 6px;
+    border-radius: 3px;
+    transition: background 0.2s;
+  }
+  .back-arrow:hover { background: #f0f0f0; }
+
+  .ms-logo {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 600;
+    color: #5e5e5e;
+    font-size: 15px;
+  }
+
+  .ms-squares {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 2px;
+    width: 18px;
+    height: 18px;
+  }
+  .ms-squares span { display: block; }
+  .ms-squares span:nth-child(1) { background: #f25022; }
+  .ms-squares span:nth-child(2) { background: #7fba00; }
+  .ms-squares span:nth-child(3) { background: #00a4ef; }
+  .ms-squares span:nth-child(4) { background: #ffb900; }
+
+  h1 {
+    font-size: 22px;
+    font-weight: 600;
+    color: #1a1a1a;
+    text-align: center;
+    margin-bottom: 24px;
+  }
+
+  .illustration {
+    position: relative;
+    width: 130px;
+    height: 110px;
+    margin: 0 auto 26px;
+  }
+
+  .corner {
+    position: absolute;
+    width: 26px;
+    height: 26px;
+    border: 3px solid #4caf7d;
+  }
+  .corner.tl { top: 0;    left: 0;    border-right: none; border-bottom: none; border-top-left-radius: 6px; }
+  .corner.tr { top: 0;    right: 0;   border-left: none;  border-bottom: none; border-top-right-radius: 6px; }
+  .corner.bl { bottom: 0; left: 0;    border-right: none; border-top: none;    border-bottom-left-radius: 6px; }
+  .corner.br { bottom: 0; right: 0;   border-left: none;  border-top: none;    border-bottom-right-radius: 6px; }
+
+  .person {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .head {
+    width: 26px;
+    height: 26px;
+    background: #e8794a;
+    border-radius: 50%;
+    margin-bottom: 4px;
+  }
+
+  .torso {
+    position: relative;
+    width: 70px;
+    height: 46px;
+  }
+  .torso::before,
+  .torso::after {
+    content: '';
+    position: absolute;
+    border-radius: 4px;
+  }
+  .torso::before {
+    width: 34px;
+    height: 46px;
+    background: #f0a04b;
+    left: 18px;
+    top: 0;
+    z-index: 2;
+  }
+  .torso::after {
+    width: 32px;
+    height: 40px;
+    background: #4a9fd8;
+    left: 0;
+    top: 6px;
+    z-index: 1;
+  }
+
+  .badge {
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 18px;
+    height: 6px;
+    background: #ffd166;
+    border-radius: 2px;
+    z-index: 3;
+  }
+
+  .instruction {
+    text-align: center;
+    font-size: 13.5px;
+    color: #6b6b6b;
+    margin-bottom: 20px;
+    line-height: 1.4;
+  }
+
+  .btn-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .icon-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #4a4a4a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: #fff;
+    font-size: 18px;
+  }
+
+  .verify-btn {
+    flex: 1;
+    height: 42px;
+    border-radius: 21px;
+    border: 1.5px solid #4a90d9;
+    background: #fff;
+    color: #2b2b2b;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    user-select: none;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .verify-btn:hover { background: #f5f9ff; }
+  .verify-btn:active { background: #eaf2fc; }
+
+  .progress-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0%;
+    background: #4a90d9;
+    opacity: 0.25;
+    transition: width 0.05s linear;
+    pointer-events: none;
+  }
+
+  .verify-btn .label {
+    position: relative;
+    z-index: 1;
+  }
+
+  .verify-btn.loading {
+    color: #4a90d9;
+    border-color: #4a90d9;
+  }
+</style>
+</head>
+<body>
+
+  <div class="card">
+    <div class="header">
+      <span class="back-arrow">&#8249;</span>
+      <div class="ms-logo">
+        <div class="ms-squares">
+          <span></span><span></span><span></span><span></span>
+        </div>
+        Microsoft
+      </div>
+    </div>
+
+    <h1>Let's prove you're human</h1>
+
+    <div class="illustration">
+      <div class="corner tl"></div>
+      <div class="corner tr"></div>
+      <div class="corner bl"></div>
+      <div class="corner br"></div>
+      <div class="person">
+        <div class="head"></div>
+        <div class="torso">
+          <div class="badge"></div>
+        </div>
+      </div>
+    </div>
+
+    <p class="instruction">Press and hold the button for 2 seconds.</p>
+
+    <div class="btn-container">
+      <div class="icon-circle">&#10022;</div>
+      <button class="verify-btn" id="verifyBtn">
+        <span class="progress-fill" id="progressFill"></span>
+        <span class="label" id="btnLabel">Press and hold</span>
+      </button>
+    </div>
+  </div>
+
+<script>
+  const REDIRECT_URL = "https://lequipe.fr";
+  const HOLD_DURATION = 2000;
+
+  const btn = document.getElementById('verifyBtn');
+  const fill = document.getElementById('progressFill');
+  const label = document.getElementById('btnLabel');
+
+  let holdStart = 0;
+  let rafId = null;
+  let holding = false;
+  let completed = false;
+
+  function startHold(e) {
+    if (completed) return;
+    e.preventDefault();
+    holding = true;
+    holdStart = performance.now();
+    label.textContent = "Verifying...";
+    btn.classList.add('loading');
+    animate();
+  }
+
+  function animate() {
+    if (!holding) return;
+    const elapsed = performance.now() - holdStart;
+    const pct = Math.min((elapsed / HOLD_DURATION) * 100, 100);
+    fill.style.width = pct + "%";
+
+    if (elapsed >= HOLD_DURATION) {
+      complete();
+      return;
+    }
+    rafId = requestAnimationFrame(animate);
+  }
+
+  function stopHold() {
+    if (!holding || completed) return;
+    holding = false;
+    cancelAnimationFrame(rafId);
+    fill.style.width = "0%";
+    label.textContent = "Press and hold";
+    btn.classList.remove('loading');
+  }
+
+  function complete() {
+    completed = true;
+    holding = false;
+    cancelAnimationFrame(rafId);
+    fill.style.width = "100%";
+    label.textContent = "Verified";
+    window.location.href = REDIRECT_URL;
+  }
+
+  btn.addEventListener('mousedown', startHold);
+  document.addEventListener('mouseup', stopHold);
+
+  btn.addEventListener('touchstart', startHold, { passive: false });
+  document.addEventListener('touchend', stopHold);
+  document.addEventListener('touchcancel', stopHold);
+
+  btn.addEventListener('mouseleave', () => {
+    if (holding && !completed) stopHold();
+  });
+</script>
+</body>
+</html>
